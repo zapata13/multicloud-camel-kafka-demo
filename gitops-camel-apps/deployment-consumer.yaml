@@ -1,0 +1,72 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: camel-kafka-consumer
+  namespace: demo-facturacion
+  labels:
+    app: camel-kafka-consumer
+    app.kubernetes.io/component: camel-kafka-consumer
+    app.kubernetes.io/instance: camel-kafka-consumer
+    app.kubernetes.io/name: camel-kafka-consumer
+    app.kubernetes.io/part-of: demo
+    app.openshift.io/runtime: camel
+    app.openshift.io/runtime-namespace: demo-facturacion
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: camel-kafka-consumer
+  template:
+    metadata:
+      labels:
+        app: camel-kafka-consumer
+        deployment: camel-kafka-consumer
+    spec:
+      containers:
+        - name: camel-kafka-consumer
+          image: 'quay.io/erivasza0/camel-kafka-consumer:1.0.1'
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+            - containerPort: 8443
+              protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          imagePullPolicy: IfNotPresent
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      securityContext: {}
+      schedulerName: default-scheduler
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%
+
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: camel-kafka-consumer
+  namespace: demo-facturacion
+  labels:
+    app: camel-kafka-consumer
+    app.kubernetes.io/component: camel-kafka-consumer
+    app.kubernetes.io/instance: camel-kafka-consumer
+    app.kubernetes.io/name: camel-kafka-consumer
+    app.kubernetes.io/part-of: demo
+spec:
+  ports:
+    - name: 8080-tcp
+      protocol: TCP
+      port: 8080
+      targetPort: 8080
+    - name: 8443-tcp
+      protocol: TCP
+      port: 8443
+      targetPort: 8443
+  selector:
+    app: camel-kafka-consumer
+    deployment: camel-kafka-consumer
