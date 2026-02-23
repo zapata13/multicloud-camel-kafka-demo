@@ -1,0 +1,11 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: amq-streams
+  namespace: openshift-operators # Must match the OperatorGroup namespace
+spec:
+  channel: stable # Specify the desired update channel
+  name: amq-streams # The package name of the operator
+  source: redhat-operators # Or your custom catalog source name
+  sourceNamespace: openshift-marketplace
+  installPlanApproval: Automatic # Or Manual, if you want to approve updates manually
