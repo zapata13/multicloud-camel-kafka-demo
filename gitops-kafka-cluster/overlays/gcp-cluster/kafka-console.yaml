@@ -1,0 +1,13 @@
+apiVersion: console.streamshub.github.com/v1alpha1
+kind: Console
+metadata:
+  name: demo
+  namespace: kafka-console
+  annotations:
+    argocd.argoproj.io/hook: PostSync
+spec:
+  hostname: demo-kafka-console.apps.cluster-2j7z5.2j7z5.gcp.redhatworkshops.io
+  kafkaClusters:
+    - listener: plain
+      name: demo-cluster
+      namespace: demo-facturacion
