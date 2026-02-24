@@ -15,6 +15,25 @@
         <quarkus.platform.version>3.27.2</quarkus.platform.version>
         <skipITs>true</skipITs>
         <surefire-plugin.version>3.5.3</surefire-plugin.version>
+        <!-- The current HawtIO Jolokia Version -->
+        <jolokia-version>2.5.1</jolokia-version>
+        <!--
+
+        ===============================================================
+        === Jolokia agent configuration for the connection with HawtIO
+        ===============================================================
+
+        It should use HTTPS and SSL client authentication at minimum.
+        The client principal should match those the HawtIO instance provides (the default is `hawtio-online.hawtio.svc`).
+        -->
+        <jolokia.protocol>https</jolokia.protocol>
+        <jolokia.host>*</jolokia.host>
+        <jolokia.port>8778</jolokia.port>
+        <jolokia.useSslClientAuthentication>true</jolokia.useSslClientAuthentication>
+        <jolokia.caCert>/var/run/secrets/kubernetes.io/serviceaccount/service-ca.crt</jolokia.caCert>
+        <jolokia.clientPrincipal.1>cn=hawtio-online.hawtio.svc</jolokia.clientPrincipal.1>
+        <jolokia.extendedClientCheck>true</jolokia.extendedClientCheck>
+        <jolokia.discoveryEnabled>false</jolokia.discoveryEnabled>
     </properties>
 
     <dependencyManagement>
@@ -61,6 +80,41 @@
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-kubernetes-config</artifactId>
         </dependency>
+        <!--
+            This dependency is required for enabling Camel management via JMX / HawtIO.
+        -->
+        <dependency>
+            <groupId>org.apache.camel.quarkus</groupId>
+            <artifactId>camel-quarkus-management</artifactId>
+        </dependency>
+
+        <!--
+            This dependency is optional for monitoring with HawtIO but is required for HawtIO view the Camel routes source XML.
+        -->
+        <dependency>
+            <groupId>org.apache.camel.quarkus</groupId>
+            <artifactId>camel-quarkus-jaxb</artifactId>
+        </dependency>
+
+        <!--
+            Add this optional dependency, to enable Camel plugin debugging feature.
+        -->
+        <dependency>
+            <groupId>org.apache.camel.quarkus</groupId>
+            <artifactId>camel-quarkus-debug</artifactId>
+        </dependency>
+
+        <!--
+            This dependency is required to include the Jolokia agent jvm for
+            access to JMX beans.
+        -->
+        <dependency>
+            <groupId>org.jolokia</groupId>
+            <artifactId>jolokia-agent-jvm</artifactId>
+            <version>${jolokia-version}</version>
+            <classifier>javaagent</classifier>
+        </dependency>
+
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-junit5</artifactId>
@@ -69,6 +123,12 @@
     </dependencies>
 
     <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>${quarkus.platform.group-id}</groupId>
