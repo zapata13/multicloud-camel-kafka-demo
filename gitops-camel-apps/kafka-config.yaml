@@ -1,0 +1,10 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: kafka-config
+  namespace: demo-facturacion
+immutable: false
+data:
+  kafka-bootstrap: 'demo-cluster-kafka-bootstrap:9092'
+  kafka-message: Mensaje generado en ambiente de producción
+  kafka-topic: demo-topic

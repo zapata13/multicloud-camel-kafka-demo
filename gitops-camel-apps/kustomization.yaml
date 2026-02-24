@@ -3,5 +3,6 @@ kind: Kustomization
 resources:
   - role.yaml
   - roleBinding.yaml
+  - kafka-config.yaml
   - deployment-consumer.yaml
   - deployment-producer.yaml
