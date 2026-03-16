@@ -29,7 +29,12 @@ flowchart LR
 - install acm operator
   - create multiclusterhub from operator
 - install gitops operator
+  - create argocd-group and add it to argocd-rbac-cm configuration to see application sets with openshift login
   - create application sets on ACM
+    - kafka-operator applicaitonset
+    - kafka-console-operator applicationset
     - app 1: Kafka clusters
       - Set the new hostnames for the kafka consoles
+      - create kafka-console project
+      - set application set to overlay using {{name}} variable
     - app 2: Camel apps

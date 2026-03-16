@@ -2,7 +2,7 @@ kind: ConfigMap
 apiVersion: v1
 metadata:
   name: kafka-config
-  namespace: demo-facturacion
+  namespace: demo-multicloud
 immutable: false
 data:
   kafka-bootstrap: 'demo-cluster-kafka-bootstrap:9092'

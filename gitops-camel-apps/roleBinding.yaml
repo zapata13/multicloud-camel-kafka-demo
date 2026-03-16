@@ -2,11 +2,11 @@ kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: read-configmaps-binding
-  namespace: demo-facturacion
+  namespace: demo-multicloud
 subjects:
   - kind: ServiceAccount
     name: default
-    namespace: demo-facturacion
+    namespace: demo-multicloud
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role

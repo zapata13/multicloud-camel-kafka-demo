@@ -2,7 +2,7 @@ kind: Deployment
 apiVersion: apps/v1
 metadata:
   name: camel-kafka-consumer
-  namespace: demo-facturacion
+  namespace: demo-multicloud
   labels:
     app: camel-kafka-consumer
     app.kubernetes.io/component: camel-kafka-consumer
@@ -10,7 +10,7 @@ metadata:
     app.kubernetes.io/name: camel-kafka-consumer
     app.kubernetes.io/part-of: demo
     app.openshift.io/runtime: camel
-    app.openshift.io/runtime-namespace: demo-facturacion
+    app.openshift.io/runtime-namespace: demo-multicloud
 spec:
   replicas: 1
   selector:
@@ -50,7 +50,7 @@ kind: Service
 apiVersion: v1
 metadata:
   name: camel-kafka-consumer
-  namespace: demo-facturacion
+  namespace: demo-multicloud
   labels:
     app: camel-kafka-consumer
     app.kubernetes.io/component: camel-kafka-consumer
