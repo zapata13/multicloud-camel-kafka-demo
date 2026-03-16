@@ -6,8 +6,8 @@ metadata:
   annotations:
     argocd.argoproj.io/hook: PostSync
 spec:
-  hostname: demo-kafka-console.apps.cluster-5cz52.5cz52.sandbox3413.opentlc.com
+  hostname: demo-kafka-console.apps.cluster-stb2g.dynamic.redhatworkshops.io
   kafkaClusters:
     - listener: plain
       name: demo-cluster
-      namespace: demo-facturacion
+      namespace: demo-multicloud

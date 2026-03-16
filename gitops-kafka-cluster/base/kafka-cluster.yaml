@@ -5,7 +5,7 @@ metadata:
   annotations:
     strimzi.io/node-pools: enabled
     strimzi.io/kraft: enabled
-  namespace: demo-facturacion
+  namespace: demo-multicloud
 spec:
   kafka:
     config:
